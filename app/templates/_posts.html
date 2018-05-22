@@ -1,0 +1,45 @@
+<div class="posts">
+    {% for post in posts %}
+        <div class="post">
+            <div class="profile-thumbnail" style="float:left;width:50px; height:80px">
+                <a href="{{ url_for('.user', username=post.author.username) }}">
+                    <img class="img-rounded profile-thumbnail"
+                         src="{{ post.author.gravatar(size=40) }}">
+                </a>
+            </div>
+            <div class="post-date" style="float:right;text-align:right">{{ moment(post.timestamp).fromNow() }}</div>
+            <div class="post-author" style="height: 45px">
+                <a href="{{ url_for('.user', username=post.author.username) }}">
+                    {{ post.author.username }}
+                </a>
+            </div>
+            <div class="post-body">
+                {% if post.body_html %}
+                    {{ post.body_html | safe }}
+                {% else %}
+                    {{ post.body }}
+                {% endif %}
+            </div>
+            <div class="post-footer" style="text-align:right">
+                {% if current_user == post.author %}
+                    <a href="{{ url_for('.edit', id=post.id) }}">
+                        <span class="label label-primary">编辑</span>
+                    </a>
+                {% elif current_user.is_administrator() %}
+                    <a href="{{ url_for('.edit', id=post.id) }}">
+                        <span class="label label-danger">编辑 [vip]</span>
+                    </a>
+                {% endif %}
+                <a href="{{ url_for('.post', id=post.id) }}">
+                    <span class="label label-default">博客链接</span>
+                </a>
+                <a href="{{ url_for('.post', id=post.id) }}#comments">
+                 <span class="label label-primary">
+                 {{ post.comments.count() }} 评论
+                 </span>
+                </a>
+            </div>
+            <hr>
+        </div>
+    {% endfor %}
+</div>

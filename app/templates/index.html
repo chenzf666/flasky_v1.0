@@ -1,0 +1,43 @@
+{% extends "base.html" %}
+{% import "bootstrap/wtf.html" as wtf %}
+{% import "_macros.html" as macros %}
+{% block title %}Flasky{% endblock %}
+
+{% block page_content %}
+    <div class="page-header">
+        <h1>你好，
+            {% if current_user.is_authenticated %}
+                {{ current_user.username }}
+            {% else %}
+                路过的朋友
+            {% endif %}!
+        </h1>
+    </div>
+    <div>
+        {% if current_user.can(Permission.WRITE_ARTICLES) %}
+            {{ wtf.quick_form(form) }}
+            <hr>
+        {% endif %}
+    </div>
+    {% if current_user.is_authenticated %}
+        {% if not show_followed %}
+            <input type="button" class="btn btn-default" style="width: 100px" value="全部">
+            <a style="width: 100px" href="{{ url_for('.show_followed') }}" class="btn btn-primary">关注的up主</a>
+        {% else %}
+            <a style="width: 100px" href="{{ url_for('.show_all') }}" class="btn btn-primary">全部</a>
+            <input type="button" class="btn btn-default" style="width: 100px" value="关注的up主">
+        {% endif %}
+        <br><br>
+    {% endif %}
+    {% include '_posts.html' %}
+    {% if pagination.pages > 1 %}
+        <div class="pagination">
+            {{ macros.pagination_widget(pagination, '.index') }}
+        </div>
+    {% endif %}
+{% endblock %}
+
+{% block scripts %}
+    {{ super() }}
+    {{ pagedown.include_pagedown() }}
+{% endblock %}

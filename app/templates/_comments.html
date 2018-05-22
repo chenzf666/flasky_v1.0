@@ -1,0 +1,40 @@
+{% for comment in comments %}
+    <div class="profile-thumbnail" style="float: left;width: 50px;  height: 80px">
+        <a href="{{ url_for('.user', username=comment.author.username) }}">
+            <img class="img-rounded profile-thumbnail"
+                 src="{{ comment.author.gravatar(size=40) }}">
+        </a>
+    </div>
+    <div class="comment-date" style="float: right">{{ moment(comment.timestamp).fromNow() }}</div>
+    <div class="comment-author" style="height: 50px">
+        <a href="{{ url_for('.user', username=comment.author.username) }}">
+            {{ comment.author.username }}
+        </a>
+    </div>
+    <div class="comment-body">
+        {% if comment.disabled %}
+            <p><i>该评论违反了相关要求，已被禁用。</i></p>
+        {% endif %}
+        {% if moderate or not comment.disabled %}
+            {% if comment.body_html %}
+                {{ comment.body_html | safe }}
+            {% else %}
+                {{ comment.body }}
+            {% endif %}
+        {% endif %}
+    </div>
+
+    {% if moderate %}
+        <div style="text-align: right">
+            <br>
+            {% if comment.disabled %}
+                <a class="btn btn-default btn-xs"
+                   href="{{ url_for('.moderate_enable',id=comment.id, page=page) }}">解禁</a>
+            {% else %}
+                <a class="btn btn-danger btn-xs"
+                   href="{{ url_for('.moderate_disable',id=comment.id, page=page) }}">禁用</a>
+            {% endif %}
+        </div>
+    {% endif %}
+    <hr>
+{% endfor %}

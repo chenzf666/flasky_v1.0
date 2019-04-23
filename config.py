@@ -14,9 +14,9 @@ class Config:
     # 邮件主题的前缀
     FLASKY_MAIL_SUBJECT_PREFIX = None
     # 发件人的地址
-    FLASKY_MAIL_SENDER = '1660823093@qq.com'
+    FLASKY_MAIL_SENDER = '××××××××××××'
     # 电子邮件的收件人
-    FLASKY_ADMIN = '1660823093@qq.com'
+    FLASKY_ADMIN = '××××××××××××'
     FLASKY_POSTS_PER_PAGE = 5
     FLASKY_FOLLOWERS_PER_PAGE = 5
     FLASKY_COMMENTS_PER_PAGE = 5
@@ -31,9 +31,9 @@ class DevelopmentConfig(Config):
     MAIL_SERVER = 'smtp.qq.com'
     MAIL_PORT = 465
     MAIL_USE_SSL = True
-    MAIL_USERNAME = '1660823093@qq.com'
-    MAIL_PASSWORD = 'unahpciblvsgcgad'
-    SQLALCHEMY_DATABASE_URI = 'mysql+pymysql://root:22621821@127.0.0.1:3306/mydatabase?charset=utf8'
+    MAIL_USERNAME = '××××××××××××'
+    MAIL_PASSWORD = '××××××××××××'
+    SQLALCHEMY_DATABASE_URI = 'mysql+pymysql://root:××××××××××××@127.0.0.1:3306/mydatabase?charset=utf8'
     # SQLALCHEMY_DATABASE_URI = os.environ.get('DEV_DATABASE_URL') or 'sqlite:///' + os.path.join(basedir,
                                                                                                 # 'data-dev.sqlite')
 
